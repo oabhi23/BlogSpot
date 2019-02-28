@@ -1,4 +1,4 @@
-package com.example.abhi.blogspot.ui.article
+package com.example.abhi.blogspot.ui.build
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,12 +6,13 @@ import android.support.design.widget.TextInputEditText
 import com.example.abhi.blogspot.R
 import com.example.abhi.blogspot.model.User
 import com.example.abhi.blogspot.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_buid_article.*
+import kotlinx.android.synthetic.main.activity_build_article.*
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.view.View
+import com.example.abhi.blogspot.ui.feed.ArticleFeedActivity
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -21,7 +22,6 @@ class BuildArticleActivity: BaseActivity(), BuildArticleMvpView {
     private lateinit var authUser: User
 
     private val firebaseStorage = FirebaseStorage.getInstance()
-    private val storageReference = firebaseStorage.reference
     private lateinit var photoUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class BuildArticleActivity: BaseActivity(), BuildArticleMvpView {
         val bundle = intent.getBundleExtra("bundle_user")
         authUser = bundle.getParcelable("user_object") as User
 
-        setContentView(R.layout.activity_buid_article)
+        setContentView(R.layout.activity_build_article)
 
         author.text = authUser.name
         var title: TextInputEditText = findViewById(R.id.title)
@@ -53,6 +53,13 @@ class BuildArticleActivity: BaseActivity(), BuildArticleMvpView {
         btn_publish.setOnClickListener {
             buildArticlePresenter.publishArticle(authUser, title.text.toString(),
                 content.text.toString(), photoUri)
+
+            //head back to feed
+            val feedIntent = Intent(this@BuildArticleActivity, ArticleFeedActivity::class.java)
+            val bundle = Bundle()
+            bundle.putParcelable("user_object", authUser)
+            feedIntent.putExtra("bundle_user", bundle)
+            startActivity(feedIntent)
         }
     }
 

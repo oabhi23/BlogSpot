@@ -1,6 +1,6 @@
 package com.example.abhi.blogspot.injections
 
-import com.example.abhi.blogspot.ui.article.BuildArticleActivity
+import com.example.abhi.blogspot.ui.build.BuildArticleActivity
 import com.example.abhi.blogspot.ui.feed.ArticleFeedActivity
 import com.example.abhi.blogspot.ui.login.LoginActivity
 import dagger.Component

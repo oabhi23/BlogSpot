@@ -1,17 +1,15 @@
 package com.example.abhi.blogspot.ui.feed
 
-import android.content.AbstractThreadedSyncAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import com.example.abhi.blogspot.R
 import com.example.abhi.blogspot.model.Article
 import com.example.abhi.blogspot.model.User
 import com.example.abhi.blogspot.ui.adapters.ArticleAdapter
-import com.example.abhi.blogspot.ui.article.BuildArticleActivity
+import com.example.abhi.blogspot.ui.build.BuildArticleActivity
 import com.example.abhi.blogspot.ui.base.BaseActivity
-import com.google.firebase.auth.FirebaseUser
+import com.example.abhi.blogspot.ui.view.ArticleActivity
 import kotlinx.android.synthetic.main.activity_article_feed.*
 import javax.inject.Inject
 
@@ -66,9 +64,16 @@ class ArticleFeedActivity: BaseActivity(), ArticleFeedMvpView, ArticleAdapter.Cu
         articleAdapter.notifyDataSetChanged()
     }
 
+    /**
+     * Call from adapter on click of article, takes user to view full article
+     */
     override fun onArticleClicked(current: Article?) {
-//        val intent = Intent(this, ArticleActivity::class.java)
-        //empty
+        val viewIntent = Intent(this, ArticleActivity::class.java)
+        val bundle = Bundle()
+        bundle.putParcelable("selected_article", current)
+        bundle.putParcelable("user_object", authUser)
+        viewIntent.putExtra("bundle_user", bundle)
+        startActivity(viewIntent)
     }
 
 }
