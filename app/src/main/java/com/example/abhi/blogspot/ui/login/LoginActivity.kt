@@ -74,9 +74,18 @@ class LoginActivity: BaseActivity(), LoginMvpView {
             if (onLogIn) {
                 loginPresenter.authenticateUser(mAuth, this, email_login.text.toString(),
                     password_login.text.toString())
+
+                email_login.text!!.clear()
+                password_login.text!!.clear()
             } else {
                 loginPresenter.signupUser(mAuth, this, name_signup.text.toString(),
                     email_signup.text.toString(), password_signup.text.toString())
+
+                name_signup.text!!.clear()
+                email_signup.text!!.clear()
+                password_signup.text!!.clear()
+
+                go_click.isClickable = true //allow user to log in
             }
         }
     }
