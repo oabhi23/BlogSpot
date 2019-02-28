@@ -35,6 +35,9 @@ class ArticleAdapter(private val context: Context, private val articleList: Muta
         }
     }
 
+    /**
+     * Set article image in list view
+     */
     private fun setImage(holder: ViewHolder, url: String?) {
         if (url == "") {
             holder.pic.setImageResource(R.drawable.default_profile_picture)
@@ -57,9 +60,8 @@ class ArticleAdapter(private val context: Context, private val articleList: Muta
         notifyDataSetChanged()
     }
 
-    //send article to activity on article list element click
     interface CustomCallback {
-        fun onArticleClicked(current: Article?)
+        fun onArticleClicked(current: Article?) //send article to activity on article list element click
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
