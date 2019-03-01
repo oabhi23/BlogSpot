@@ -30,6 +30,7 @@ constructor(): BasePresenter<ArticleFeedMvpView>() {
                     for (i in snapshot.children) {
                         list.add(i.getValue(Article::class.java))
                     }
+                    list.reverse()
                     baseView?.articleListUpdated(list)
                 } else {
                     baseView?.articleListUpdated(ArrayList())

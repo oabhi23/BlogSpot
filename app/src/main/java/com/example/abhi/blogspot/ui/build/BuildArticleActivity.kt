@@ -11,6 +11,8 @@ import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.WindowManager
 import com.example.abhi.blogspot.ui.feed.ArticleFeedActivity
@@ -39,6 +41,17 @@ class BuildArticleActivity: BaseActivity(), BuildArticleMvpView {
 
         setContentView(R.layout.activity_build_article)
 
+        toolbar.title = "           Build Article"
+        toolbar.setTitleTextColor(resources.getColor(android.R.color.white))
+
+        //back to last activity
+        val drawable = applicationContext.resources.getDrawable(R.drawable.back_icon)
+        drawable.setTint(resources.getColor(android.R.color.white))
+        toolbar.navigationIcon = drawable
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         author.text = authUser.name
@@ -56,6 +69,13 @@ class BuildArticleActivity: BaseActivity(), BuildArticleMvpView {
         btn_publish.setOnClickListener {
             buildArticlePresenter.publishArticle(authUser, title.text.toString(),
                 content.text.toString(), photoUri)
+
+            progress_publish.visibility = View.VISIBLE
+            btn_publish.visibility = View.GONE
+
+            val snackbar = Snackbar.make(this.findViewById(android.R.id.content), R.string.publish_success, Snackbar.LENGTH_LONG)
+            snackbar.view.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
+            snackbar.show()
 
             //head back to feed
             val feedIntent = Intent(this@BuildArticleActivity, ArticleFeedActivity::class.java)

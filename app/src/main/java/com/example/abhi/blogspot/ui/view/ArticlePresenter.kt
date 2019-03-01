@@ -38,6 +38,7 @@ constructor(): BasePresenter<ArticleMvpView>() {
                     for (i in snapshot.children) {
                         list.add(i.getValue(Comment::class.java))
                     }
+                    list.reverse()
                     baseView?.sendCommentList(list)
                 } else {
                     baseView?.sendCommentList(ArrayList())

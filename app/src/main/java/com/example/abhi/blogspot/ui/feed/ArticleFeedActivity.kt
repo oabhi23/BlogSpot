@@ -1,5 +1,6 @@
 package com.example.abhi.blogspot.ui.feed
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,7 +10,9 @@ import com.example.abhi.blogspot.model.User
 import com.example.abhi.blogspot.ui.adapters.ArticleAdapter
 import com.example.abhi.blogspot.ui.build.BuildArticleActivity
 import com.example.abhi.blogspot.ui.base.BaseActivity
+import com.example.abhi.blogspot.ui.login.LoginActivity
 import com.example.abhi.blogspot.ui.view.ArticleActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_article_feed.*
 import javax.inject.Inject
 
@@ -28,6 +31,9 @@ class ArticleFeedActivity: BaseActivity(), ArticleFeedMvpView, ArticleAdapter.Cu
         authUser = bundle.getParcelable("user_object") as User
 
         setContentView(R.layout.activity_article_feed)
+
+        toolbar.title = "News Feed"
+        toolbar.setTitleTextColor(resources.getColor(android.R.color.white))
 
         getActivityComponent()?.let {
             it.inject(this)
@@ -51,6 +57,28 @@ class ArticleFeedActivity: BaseActivity(), ArticleFeedMvpView, ArticleAdapter.Cu
             bundle.putParcelable("user_object", authUser)
             newArticleIntent.putExtra("bundle_user", bundle)
             startActivity(newArticleIntent)
+        }
+
+        //sign out
+        fab_sign_out.setOnClickListener {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setTitle("Log out")
+            builder.setMessage("Are you sure you would like to log out?")
+
+            builder.apply {
+                setPositiveButton("Log out") { dialog, _ ->
+                    FirebaseAuth.getInstance().signOut()
+                    val logoutIntent = Intent(this@ArticleFeedActivity, LoginActivity::class.java)
+                    startActivity(logoutIntent)
+                    finishAffinity()
+                    dialog.dismiss()
+                }
+                setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+            }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 

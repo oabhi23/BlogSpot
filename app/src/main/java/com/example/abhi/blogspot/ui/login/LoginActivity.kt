@@ -3,7 +3,9 @@ package com.example.abhi.blogspot.ui.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.abhi.blogspot.R
@@ -77,6 +79,10 @@ class LoginActivity: BaseActivity(), LoginMvpView {
 
                 email_login.text!!.clear()
                 password_login.text!!.clear()
+
+                progress_go.visibility = View.VISIBLE
+                go_click.visibility = View.GONE
+
             } else {
                 loginPresenter.signupUser(mAuth, this, name_signup.text.toString(),
                     email_signup.text.toString(), password_signup.text.toString())
@@ -84,6 +90,10 @@ class LoginActivity: BaseActivity(), LoginMvpView {
                 name_signup.text!!.clear()
                 email_signup.text!!.clear()
                 password_signup.text!!.clear()
+
+                val snackbar = Snackbar.make(this.findViewById(android.R.id.content), R.string.signup_success, Snackbar.LENGTH_LONG)
+                snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                snackbar.show()
 
                 go_click.isClickable = true //allow user to log in
             }
