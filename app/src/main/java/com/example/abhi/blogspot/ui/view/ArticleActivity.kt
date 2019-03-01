@@ -41,6 +41,14 @@ class ArticleActivity: BaseActivity(), ArticleMvpView {
 
         setViews(article)
 
+        //back to last activity
+        val drawable = applicationContext.resources.getDrawable(R.drawable.back_icon)
+        drawable.setTint(resources.getColor(android.R.color.white))
+        toolbar.navigationIcon = drawable
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
         var comment: TextInputEditText = findViewById(R.id.comment)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 

@@ -2,4 +2,7 @@
     <string name="app_name">BlogSpot</string>
     <string name="log_in">Login</string>
     <string name="sign_up">Sign up</string>
+    <string name="go_success">Logging you in!</string>
+    <string name="publish_success">Your post is now published!</string>
+    <string name="signup_success">All signed up! Please log in.</string>
 </resources>
